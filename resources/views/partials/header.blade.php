@@ -3,7 +3,7 @@
                 <nav class="navbar navbar-expand">
                     <div class="collapse navbar-collapse justify-content-between">
                         <div class="header-left">
-                            <div class="search_bar dropdown">
+                            {{-- <div class="search_bar dropdown">
                                 <span class="search_icon p-3 c-pointer" data-toggle="dropdown">
                                     <i class="mdi mdi-magnify"></i>
                                 </span>
@@ -12,10 +12,10 @@
                                         <input class="form-control" type="search" placeholder="Search" aria-label="Search">
                                     </form>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
 
-                        <ul class="navbar-nav header-right">
+                        {{-- <ul class="navbar-nav header-right">
                             <li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
                                     <i class="mdi mdi-bell"></i>
@@ -95,7 +95,7 @@
                                     </a>
                                 </div>
                             </li>
-                        </ul>
+                        </ul> --}}
                     </div>
                 </nav>
             </div>

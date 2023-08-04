@@ -49,12 +49,12 @@
                             <span class="nav-text">Pemasukkan</span>
                         </a>
                     </li>
-                    {{-- <li>
-                        <a href="{{ route('data-pemasukkan.index') }}" aria-expanded="false">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                            <span class="nav-text">Laporan</span>
+                    <li>
+                        <a href="{{ route('logout') }}" aria-expanded="false">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            <span class="nav-text">Keluar</span>
                         </a>
-                    </li> --}}
+                    </li>
 
 
                 </ul>
