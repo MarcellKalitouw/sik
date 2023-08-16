@@ -7,7 +7,8 @@ use App\Http\Controllers\{
     PemasukkanController,
     DashboardController,
     LaporanController,
-    LoginController
+    LoginController,
+    KategoriController
 };
 
 
@@ -27,6 +28,9 @@ Route::get('login', [LoginController::class, 'viewLogin'])->name('login');
 Route::post('login-post', [LoginController::class, 'postLogin'])->name('post.login');
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
+Route::get('test', [LoginController::class, 'view'])->name('test.view');
+Route::post('testposts/{post}/post', [LoginController::class, 'postTest'])->name('post.test');
+
 // Route::get('/', function () {
 //     return view('dashboard.index');
 // });
@@ -37,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::resource('pencatatan-keuangan', PencatatanKeuanganController::class);
+    Route::resource('kategori', KategoriController::class);
     Route::resource('data-pengeluaran', PengeluaranController::class);
     Route::resource('data-pemasukkan', PemasukkanController::class);
 });

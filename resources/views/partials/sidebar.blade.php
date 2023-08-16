@@ -46,7 +46,13 @@
                     <li>
                         <a href="{{ route('data-pemasukkan.index') }}" aria-expanded="false">
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                            <span class="nav-text">Pemasukkan</span>
+                            <span class="nav-text">Pendapatan</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('kategori.index') }}" aria-expanded="false">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            <span class="nav-text">Kategori</span>
                         </a>
                     </li>
                     <li>

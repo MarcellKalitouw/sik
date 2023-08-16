@@ -14,6 +14,16 @@ use Hash;
 
 class LoginController extends Controller
 {
+    public function view(){
+        // dd($request);
+
+        return view('pencatatan_keuangan.create');
+
+    }
+    public function postTest(Request $request, $post){
+        dd($post);
+
+    }
     public function viewLogin(){
         return view('login');
     }

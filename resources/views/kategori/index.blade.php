@@ -1,6 +1,6 @@
 @extends('partials.layout')
 
-@section('title', 'Pengeluaran')
+@section('title', 'Kategori')
 
 @section('content')
     <div class="content-body">
@@ -14,8 +14,8 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Tabel Data Pengeluaran</h4>
-                                <a href="{{ route('data-pengeluaran.create') }}" class="btn btn-rounded btn-success">
+                                <h4 class="card-title">Tabel Data Kategori </h4>
+                                <a href="{{ route('kategori.create') }}" class="btn btn-rounded btn-success">
                                   <i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Data
                                 </a>
                             </div>
@@ -25,36 +25,24 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Nama Pengeluaran</th>
-                                                <th>Kategori</th>
-                                                <th>Jumlah</th>
-                                                <th>Keterangan</th>
-                                                <th>Penanggung Jawab</th>
+                                                <th>Nama Kategori  </th>
                                                 <th>Opsi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($pengeluaran as $item)
+                                            @forelse ($kategori as $item)
                                                 <tr style="color: black">
-                                                    <td>{{ $loop->iteration}}</td>
                                                     
-                                                    <td>{{ $item->nama }}</td>
-                                                    <td style="text-transform: uppercase">
-                                                        <span class="badge badge-primary">
-                                                            {{ $item->kategori }}
-                                                        </span>
-                                                    </td>
-                                                    <td>Rp.{{ number_format($item->jumlah, 0, ',', '.') }}</td>
-                                                    <td>{{ $item->keterangan ? $item->keterangan : '-' }}</td>
-                                                    <td>{{ $item->from_to }}</td>
+                                                    <td>{{ $loop->iteration}}</td>
+                                                    <td>{{ $item->nama}}</td>
                                                     <td>
-                                                      <form action="{{ route('data-pengeluaran.destroy', $item->id) }}" method="POST">
+                                                      <form action="{{ route('kategori.destroy', $item->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <a href="{{ route('data-pengeluaran.edit', $item->id) }}" class="btn btn-rounded btn-warning">
+                                                        <a href="{{ route('kategori.edit', $item->id) }}" class="btn btn-rounded btn-warning">
                                                           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  
                                                         </a>
-                                                        <a href="{{ asset('pengeluaran/'.$item->gambar) }}" target="_blank" class="btn btn-rounded btn-info">
+                                                        <a href="{{ asset('kategori/'.$item->gambar) }}" target="_blank" class="btn btn-rounded btn-info">
                                                           <i class="fa fa-info-circle" aria-hidden="true"></i>
                                                         </a>
                                                         <button type="submit" class="btn btn-rounded btn-danger">
@@ -71,12 +59,8 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th>No</th>
-                                                <th>Nama Pengeluaran</th>
-                                                <th>Kategori</th>
-                                                <th>Jumlah</th>
-                                                <th>Keterangan</th>
-                                                <th>Penanggung Jawab</th>
+                                                <th>No</th> 
+                                                <th>Nama Kategori</th>
                                                 <th>Opsi</th>
                                             </tr>
                                         </tfoot>

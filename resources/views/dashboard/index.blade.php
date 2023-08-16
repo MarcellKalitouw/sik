@@ -105,7 +105,7 @@
                     <div class="col-lg-8">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">All Expense</h4>
+                                <h4 class="card-title">Lima Catatan Keuangan Terakhir</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -181,7 +181,7 @@
                     <div class="col-lg-6 col-xl-6 col-xxl-6 col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">10 Besar Pemasukkan</h4>
+                                <h4 class="card-title">10 Besar Pendapatan</h4>
                             </div>
                             <div class="card-body">
                                 <div class="widget-timeline">

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Pemasukkan, PencatatanKeuangan, Gambar};
+use App\Models\{Pemasukkan, PencatatanKeuangan, Gambar, Kategori};
 use Illuminate\Http\Request;
 use View, DB, File;
 class PemasukkanController extends Controller
 {
     public function validateForm($req){
         $req->validate([
+            'id_kategori' => 'required',
             'tgl' => 'required',
             'gbr' => 'required',
             'nama' => 'required',
@@ -27,12 +28,15 @@ class PemasukkanController extends Controller
         //
         return view('pemasukkan.index', [
             'pemasukkan' => PencatatanKeuangan::leftJoin('gambars','pencatatan_keuangans.id_gambar','gambars.id')
-                             ->where('pencatatan_keuangans.tipe', 'pemasukkan')
-                             ->select(  'pencatatan_keuangans.*', 
-                                        'gambars.gambar as gambar', 
-                                    )
-                             ->latest()
-                             ->get()
+                            ->leftJoin('kategoris','pencatatan_keuangans.id_kategori','kategoris.id')
+                            ->where('pencatatan_keuangans.tipe', 'pemasukkan')
+                            ->select(
+                                'pencatatan_keuangans.*', 
+                                'gambars.gambar as gambar', 
+                                'kategoris.nama as kategori', 
+                            )
+                            ->latest()
+                            ->get()
         ]);
     }
 
@@ -40,17 +44,26 @@ class PemasukkanController extends Controller
     public function create()
     {
         //
-        return view('pemasukkan.create');
+        return view('pemasukkan.create', [
+            'kategori' => Kategori::all()
+        ]);
     }
 
    
     public function store(Request $request)
     {
+        // dd($request);
         DB::beginTransaction();
         $validate = $this->validateForm($request);
         
         try {
             $data = $request->except(['_token']);
+            $kategori = Kategori::firstOrCreate(
+                        ['id' => $request->id_kategori],
+                        ['nama' => $request->id_kategori]
+                    );
+            // dd($kategori->nama);
+            $data['id_kategori']= $kategori->id;
 
             $pk = PencatatanKeuangan::create($data);
 
@@ -92,7 +105,8 @@ class PemasukkanController extends Controller
         //
         // dd($this->findId($id));
         return view('pemasukkan.edit', [
-            'pemasukkan' => $this->findId($id)
+            'pemasukkan' => $this->findId($id),
+            'kategori' => Kategori::all()
         ]);
     }
 
@@ -100,6 +114,7 @@ class PemasukkanController extends Controller
     {
         //
         $request->validate([
+            'id_kategori' => 'required',
             'nama' => 'required',
             'jumlah' => 'required',
             'from_to' => 'required',
@@ -109,7 +124,13 @@ class PemasukkanController extends Controller
         $oldData = $this->findId($id);
         $oldGbr = Gambar::where('id', $oldData->id_gambar)->first();
         $data = $request->except(['_token', '_method', 'gbr']);
+        $kategori = Kategori::firstOrCreate(
+                        ['id' => $request->id_kategori],
+                        ['nama' => $request->id_kategori]
+                    );
+        $data['id_kategori']= $kategori->id;
 
+        
         try {
             //code...
             DB::beginTransaction();
@@ -151,6 +172,6 @@ class PemasukkanController extends Controller
         File::delete('pemasukkan/'.$oldGbr->gambar);
         PencatatanKeuangan::where('id',$id)->delete();
         Gambar::where('id', $oldData->id_gambar)->delete();
-        return redirect()->route('data-pemasukkan.index')->with('success','Data pengeluaran berhasil dihapus!!');
+        return redirect()->route('data-pemasukkan.index')->with('delete','Data pengeluaran berhasil dihapus!!');
     }
 }

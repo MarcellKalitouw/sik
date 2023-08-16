@@ -1,19 +1,20 @@
 @extends('partials.layout')
 
-@section('title', 'Pengeluaran')
+@section('title', 'Pendapatan')
 
 @section('content')
     <div class="content-body">
             <div class="container-fluid">
                 
                 <!-- row -->
+                <x-alert></x-alert>
 
 
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Tabel Data Pengeluaran</h4>
+                                <h4 class="card-title">Tabel Data Pendapatan</h4>
                                 <a href="{{ route('data-pemasukkan.create') }}" class="btn btn-rounded btn-success">
                                   <i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Data
                                 </a>
@@ -23,8 +24,9 @@
                                     <table id="example" class="display" style="min-width: 845px">
                                         <thead>
                                             <tr>
-                                                
-                                                <th>Nama Pengeluaran</th>
+                                                <th>No</th>
+                                                <th>Nama Pendapatan</th>
+                                                <th>Kategori</th>
                                                 <th>Jumlah</th>
                                                 <th>Keterangan</th>
                                                 <th>Penanggung Jawab</th>
@@ -34,8 +36,14 @@
                                         <tbody>
                                             @forelse ($pemasukkan as $item)
                                                 <tr style="color: black">
+                                                    <td>{{ $loop->iteration}}</td>
                                                     
                                                     <td>{{ $item->nama }}</td>
+                                                    <td style="text-transform: uppercase">
+                                                        <span class="badge badge-primary">
+                                                            {{ $item->kategori }}
+                                                        </span>
+                                                    </td>
                                                     <td>Rp.{{ number_format($item->jumlah, 0, ',', '.') }}</td>
                                                     <td>{{ $item->keterangan ? $item->keterangan : '-' }}</td>
                                                     <td>{{ $item->from_to }}</td>
@@ -63,8 +71,8 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                
-                                                <th>Nama Pengeluaran</th>
+                                                <th>No</th>
+                                                <th>Nama Pendapatan</th>
                                                 <th>Jumlah</th>
                                                 <th>Keterangan</th>
                                                 <th>Penanggung Jawab</th>

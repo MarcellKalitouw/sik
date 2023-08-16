@@ -29,6 +29,26 @@
                                             @enderror
                                         </div>
                                         <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label-lg">Kategori Pengeluaran</label>
+                                            <div class="col-sm-10">
+                                                <select name="id_kategori" id="dynamic-option-creation" class="form-control form-control-lg">
+                                                    <option selected disabled>~Pilih kategori~</option>
+                                                    @foreach ($kategori as $item)
+                                                        <option value="{{ $item->id }}" @if ($item->id == old('id_kategori'))
+                                                           selected 
+                                                        @endif>{{ $item->nama }}</option>
+                                                    @endforeach
+                                                    {{-- @empty
+                                                        <option disabled></option>
+                                                        
+                                                    @endforelse --}}
+                                                </select>
+                                            </div>
+                                            @error('id_kategori')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group row">
                                             <label class="col-sm-2 col-form-label-lg">Jumlah Pengeluaran</label>
                                             <div class="col-sm-10">
                                                 <input type="text" name="jumlah" value="{{ old('jumlah') }}" class="form-control form-control-lg" placeholder="50000, 15000, 20000"

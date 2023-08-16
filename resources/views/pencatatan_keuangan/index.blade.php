@@ -5,10 +5,7 @@
 @section('content')
     <div class="content-body">
             <div class="container-fluid">
-                
-                <!-- row -->
-
-
+                <x-alert></x-alert>
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -18,29 +15,40 @@
                                   <i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Data
                                 </a> --}}
                             </div>
+                            {{-- <div class="alert alert-success alert-dismissible alert-alt solid fade show">
+                                <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+                                </button>
+                                <strong>Success!</strong> Message has been sent.
+                            </div> --}}
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table id="example" class="display" style="min-width: 845px">
                                         <thead>
                                             <tr>
-                                                <th>Nama Pengeluaran</th>
+                                                <th>No</th>
+                                                <th>Nama Pendapatan/Pengeluaran</th>
                                                 <th>Jumlah</th>
                                                 <th>Keterangan</th>
                                                 <th>Penanggung Jawab</th>
                                                 <th>Tipe</th>
-                                                <th>Opsi</th>
+                                                {{-- <th>Opsi</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @forelse ($pencatatan_keuangan as $item)
                                                 <tr style="color: black">
-                                                    
+                                                    <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $item->nama }}</td>
                                                     <td>{{ $item->jumlah }}</td>
                                                     <td>{{ $item->keterangan ? $item->keterangan : '-' }}</td>
                                                     <td>{{ $item->from_to }}</td>
-                                                    <td style="text-transform:uppercase">{{ $item->tipe }}</td>
-                                                    <td>
+                                                    <td style="text-transform:uppercase">
+                                                        <span class="badge badge-lg {{ $item->tipe=='pemasukkan' ? 'badge-success' : 'badge-danger' }}">
+                                                            {{ $item->tipe }}
+                                                        </span>
+                                                    
+                                                    </td>
+                                                    {{-- <td>
                                                       <form action="{{ route('pencatatan-keuangan.destroy', $item->id) }}">
                                                         @csrf
                                                         @method('DELETE')
@@ -55,7 +63,7 @@
                                                         </button>
 
                                                       </form>
-                                                    </td>
+                                                    </td> --}}
                                                 </tr>
                                             @empty
                                                 
@@ -64,12 +72,13 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th>Nama Pengeluaran</th>
+                                                <th>No</th>
+                                                <th>Nama Pendapatan/Pengeluaran</th>
                                                 <th>Jumlah</th>
                                                 <th>Keterangan</th>
                                                 <th>Penanggung Jawab</th>
                                                 <th>Tipe</th>
-                                                <th>Opsi</th>
+                                                {{-- <th>Opsi</th> --}}
                                             </tr>
                                         </tfoot>
                                     </table>

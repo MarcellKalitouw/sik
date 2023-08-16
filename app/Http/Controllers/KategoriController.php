@@ -7,79 +7,63 @@ use Illuminate\Http\Request;
 
 class KategoriController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
-        //
+        // dd('index');
+        return view('kategori.index',[
+            'kategori' => Kategori::all()
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
+        return view('kategori.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
+        $input = $request->validate([
+            'nama' => 'required|unique:kategoris,nama',
+        ]);
+        // dd($input);
+        $kategori = Kategori::create($input);
+
+        return redirect()->route('kategori.index')->with('success', 'Data Kategori telah disimpan');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Kategori  $kategori
-     * @return \Illuminate\Http\Response
-     */
     public function show(Kategori $kategori)
     {
         //
+        
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Kategori  $kategori
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Kategori $kategori)
+    public function edit( $id)
     {
         //
+        return view('kategori.edit',[
+            'kategori' => Kategori::find($id)
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Kategori  $kategori
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Kategori $kategori)
+    public function update(Request $request, $id)
     {
         //
+        $input = $request->validate([
+            'nama' => 'required|unique:kategoris,nama',
+        ]);
+        // dd($input);
+        $kategori = Kategori::where('id',$id)->update($input);
+
+        return redirect()->route('kategori.index')->with('success', 'Data Kategori telah diupdate');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Kategori  $kategori
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Kategori $kategori)
+    public function destroy($id)
     {
         //
+        Kategori::where('id', $id)->delete();
+        return redirect()->route('kategori.index')->with('delete', 'Data Kategori telah diupdate');
     }
 }

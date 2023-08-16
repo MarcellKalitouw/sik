@@ -16,7 +16,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
-                                    <form method="POST" action="{{ route('pencatatan-keuangan.store') }}" enctype="multipart/form-data">
+                                    <form method="POST" action="{{ route('post.test', Auth::user()->id) }}" enctype="multipart/form-data">
                                         @csrf
                                         
                                         <div class="form-group row">

@@ -6,12 +6,15 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('template/images/favicon.png') }}">
     <link href="{{ asset ('template/vendor/pg-calendar/css/pignose.calendar.min.css') }}" rel="stylesheet">
     <link href="{{ asset ('template/vendor/chartist/css/chartist.min.css') }}" rel="stylesheet">
+    {{-- SELECT 2 --}}
+    <link rel="stylesheet" href="{{asset ('template/vendor/select2/css/select2.min.css') }}">
+    
 
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- Datatable -->
     <link href="{{ asset ('template/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
     <link href="{{ asset('template/css/style.css') }}" rel="stylesheet">
-    <meta name="csrf-token" content="{{ csrf_token() }}" />b 
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
      $( function() {
         $( "#datepicker" ).datepicker();
     } );

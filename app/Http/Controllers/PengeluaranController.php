@@ -11,6 +11,7 @@ class PengeluaranController extends Controller
     
     public function validateForm($req){
         $req->validate([
+            'id_kategori' => 'required',
             'tgl' => 'required',
             'gbr' => 'required',
             'nama' => 'required',
@@ -29,10 +30,13 @@ class PengeluaranController extends Controller
         //
         return view('pengeluaran.index', [
             'pengeluaran' => PencatatanKeuangan::leftJoin('gambars','pencatatan_keuangans.id_gambar','gambars.id')
+                             ->leftJoin('kategoris','pencatatan_keuangans.id_kategori','kategoris.id')
                              ->where('pencatatan_keuangans.tipe', 'pengeluaran')
-                             ->select(  'pencatatan_keuangans.*', 
-                                        'gambars.gambar as gambar', 
-                                    )
+                             ->select(  
+                                    'pencatatan_keuangans.*', 
+                                    'gambars.gambar as gambar', 
+                                    'kategoris.nama as kategori', 
+                                )
                              ->latest()
                              ->get()
         ]);
@@ -42,7 +46,9 @@ class PengeluaranController extends Controller
     public function create()
     {
         //
-        return view('pengeluaran.create');
+        return view('pengeluaran.create',[
+            'kategori' => Kategori::all()
+        ]);
     }
 
    
@@ -53,7 +59,12 @@ class PengeluaranController extends Controller
         
         try {
             $data = $request->except(['_token']);
-
+            $kategori = Kategori::firstOrCreate(
+                        ['id' => $request->id_kategori],
+                        ['nama' => $request->id_kategori]
+                    );
+            // dd($kategori->nama);
+            $data['id_kategori']= $kategori->id;
             $pk = PencatatanKeuangan::create($data);
 
             $fileName = time().'_'.$request->gbr->getClientOriginalName();
@@ -94,7 +105,8 @@ class PengeluaranController extends Controller
         //
         // dd($this->findId($id));
         return view('pengeluaran.edit', [
-            'pengeluaran' => $this->findId($id)
+            'pengeluaran' => $this->findId($id),
+            'kategori' => Kategori::all()
         ]);
     }
 
@@ -102,6 +114,7 @@ class PengeluaranController extends Controller
     {
         //
         $request->validate([
+            'id_kategori' => 'required',
             'tgl' => 'required',
             'nama' => 'required',
             'jumlah' => 'required',
@@ -111,10 +124,16 @@ class PengeluaranController extends Controller
         $oldData = $this->findId($id);
         $oldGbr = Gambar::where('id', $oldData->id_gambar)->first();
         $data = $request->except(['_token', '_method', 'gbr']);
-
+        
         try {
             //code...
             DB::beginTransaction();
+            $kategori = Kategori::firstOrCreate(
+                        ['id' => $request->id_kategori],
+                        ['nama' => $request->id_kategori]
+                    );
+            $data['id_kategori']= $kategori->id;
+
 
             if(is_file($request->gbr)){
                 $fileName = time().'_'.$request->gbr->getClientOriginalName(); 
@@ -150,9 +169,11 @@ class PengeluaranController extends Controller
         // dd($id);
         $oldData = PencatatanKeuangan::where('id', $id)->first();
         $oldGbr = Gambar::where('id', $oldData->id_gambar)->first();
-        File::delete('pengeluaran/'.$oldGbr->gambar);
+        if($oldGbr){
+            File::delete('pengeluaran/'.$oldGbr->gambar);
+        }
         PencatatanKeuangan::where('id',$id)->delete();
         Gambar::where('id', $oldData->id_gambar)->delete();
-        return redirect()->route('data-pengeluaran.index')->with('success','Data pengusaha  has been deleted!!');
+        return redirect()->route('data-pengeluaran.index')->with('delete','Data pengusaha  has been deleted!!');
     }
 }

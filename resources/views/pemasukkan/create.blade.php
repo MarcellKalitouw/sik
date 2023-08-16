@@ -1,6 +1,6 @@
 @extends('partials.layout')
 
-@section('title', 'Tambah Pemasukkan')
+@section('title', 'Tambah Pendapatan')
 @section('content')
     <div class="content-body">
             <div class="container-fluid">
@@ -12,7 +12,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Tambah Pemasukkan</h4>
+                                <h4 class="card-title">Tambah Pendapatan</h4>
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
@@ -20,16 +20,39 @@
                                         @csrf
                                         
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label-lg">Nama Pemasukkan</label>
+                                            <label class="col-sm-2 col-form-label-lg">Nama Pendapatan</label>
                                             <div class="col-sm-10">
-                                                <input type="text" name="nama" value="{{ old('nama') }}" class="form-control form-control-lg" placeholder="Nama Pemasukkan">
+                                                <input type="text" name="nama" value="{{ old('nama') }}" class="form-control form-control-lg" placeholder="Nama Pendapatan">
                                             </div>
                                             @error('nama')
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label-lg">Jumlah Pemasukkan</label>
+                                            <label class="col-sm-2 col-form-label-lg">Kategori Pendapatan</label>
+                                            <div class="col-sm-10">
+                                                <select name="id_kategori" id="dynamic-option-creation" class="form-control form-control-lg">
+                                                    {{-- @if ($pemasukkan->id_kategori == '') --}}
+                                                        <option selected disabled>~Pilih kategori~</option>
+                                                    {{-- @endif --}}
+                                                    @foreach ($kategori as $item)
+                                                        <option value="{{ $item->id }}" @if ($item->id == old('id_kategori'))
+                                                           selected 
+                                                        @endif>{{ $item->nama }}</option>
+                                                    @endforeach
+                                                    {{-- @empty
+                                                        <option disabled></option>
+                                                        
+                                                    @endforelse --}}
+                                                </select>
+                                            </div>
+                                            @error('id_kategori')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label-lg">Jumlah Pendapatan</label>
                                             <div class="col-sm-10">
                                                 <input type="text" name="jumlah" value="{{ old('jumlah') }}" class="form-control form-control-lg" placeholder="50000, 15000, 20000"
                                                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
@@ -39,7 +62,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label-lg">Tanggal Pemasukkan</label>
+                                            <label class="col-sm-2 col-form-label-lg">Tanggal Pendapatan</label>
                                             <div class="col-sm-10">
                                                 <input type="date" name="tgl" value="{{ old('tgl') }}" class="form-control form-control-lg" >
                                             </div>
@@ -63,7 +86,7 @@
                                         <div class="form-group">
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text">Bukti Pemasukkan</span>
+                                                    <span class="input-group-text">Bukti Pendapatan</span>
                                                 </div>
                                                 <div class="custom-file">
                                                     <input name="gbr" type="file" class="custom-file-input" id="inputGambar" accept=".jpg, .jpeg">

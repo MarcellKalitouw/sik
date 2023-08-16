@@ -38,6 +38,9 @@
     <script src="{{ asset ('template/vendor/jquery.counterup/jquery.counterup.min.js') }}"></script>
     <!-- Chart ChartJS plugin files -->
     <script src="{{ asset('template/vendor/chart.js/Chart.bundle.min.js') }}"></script>
+    {{-- select2 --}}
+    <script src="{{ asset ('template/vendor/select2/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('template/js/plugins-init/select2-init.js') }}"></script>
 
     <!-- Datatable -->
     <script src="{{ asset ('template/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
@@ -48,3 +51,22 @@
     <script src="{{ asset ('template/js/dashboard/dashboard-2.js') }}"></script>
 
     @stack('scriptPlus')
+
+    <script>
+             $('.alert').fadeOut(6000, function() {
+                $('.alert').remove();
+            });
+            // $(".alert").queue(function() {
+            //     $(this).remove();
+            //     // $(this).dequeue();
+            // });
+        $("button.cls-alert").click(function() {
+            $(".alert").animate({
+                height: 0,
+            }, 2000);
+            $(".alert").queue(function() {
+                $(this).remove();
+                $(this).dequeue();
+            });
+            });
+    </script>

@@ -12,7 +12,7 @@ class PencatatanKeuangan extends Model
 
     public $timestamps = true;
     protected $fillable = [
-        // 'id_kategori',
+        'id_kategori',
         'id_gambar',
         'tgl',
         'deleted_by',

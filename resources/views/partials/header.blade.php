@@ -14,9 +14,11 @@
                                 </div>
                             </div> --}}
                         </div>
-
-                        {{-- <ul class="navbar-nav header-right">
-                            <li class="nav-item dropdown notification_dropdown">
+                        <div>
+                            <h2>SIK - Teknik Informatika</h2>
+                        </div>
+                        <ul class="navbar-nav header-right">
+                            {{-- <li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
                                     <i class="mdi mdi-bell"></i>
                                     <div class="pulse-css"></div>
@@ -94,8 +96,8 @@
                                         <span class="ml-2">Logout </span>
                                     </a>
                                 </div>
-                            </li>
-                        </ul> --}}
+                            </li> --}}
+                        </ul>
                     </div>
                 </nav>
             </div>
