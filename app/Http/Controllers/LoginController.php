@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 
 
 use Illuminate\Support\Facades\Auth;
@@ -14,17 +15,20 @@ use Hash;
 
 class LoginController extends Controller
 {
-    public function view(){
-        // dd($request);
+    // public function view(){
+    //     // dd($request);
 
-        return view('pencatatan_keuangan.create');
+    //     return view('pencatatan_keuangan.create');
 
-    }
-    public function postTest(Request $request, $post){
-        dd($post);
+    // }
+    // public function postTest(Request $request, $post){
+    //     dd($post);
 
-    }
+    // }
     public function viewLogin(){
+        if(Auth::user()){
+            return Redirect::to(url()->previous());
+        }
         return view('login');
     }
     public function logout(Request $request)
@@ -35,7 +39,7 @@ class LoginController extends Controller
  
         request()->session()->regenerateToken();
  
-        return redirect('/login');
+        return redirect('/');
     }
 
      public function postLogin(Request $request){
@@ -47,7 +51,7 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
         if(Auth::attempt($credentials)){
                 // dd($credentials);
-            return redirect()->intended('/')->withSuccess('Signed In');
+            return redirect()->intended('/dashboard')->withSuccess('Signed In');
         }
         
         

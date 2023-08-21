@@ -80,13 +80,13 @@ class PemasukkanController extends Controller
             $pk = PencatatanKeuangan::where('id', $pk->id)->update(['id_gambar' => $gambar->id]);
 
             DB::commit();
-            return redirect()->route('data-pengeluaran.index')->with('success', 'Data Pengeluaran berhasil disimpan');
+            return redirect()->route('data-pemasukkan.index')->with('success', 'Data Pengeluaran berhasil disimpan');
             
 
         } catch (\Exception $e) {
                 dd($e);
                 DB::rollback();
-                return redirect()->route('data-pengeluaran.create')->with('error', 'Data Pengeluaran gagal disimpan');
+                return redirect()->route('data-pemasukkan.create')->with('error', 'Data Pengeluaran gagal disimpan');
         }
     }
 

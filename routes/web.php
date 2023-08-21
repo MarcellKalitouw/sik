@@ -28,14 +28,16 @@ Route::get('login', [LoginController::class, 'viewLogin'])->name('login');
 Route::post('login-post', [LoginController::class, 'postLogin'])->name('post.login');
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
+route::get('/', [DashboardController::class,'pageUser'])->name('page.user');
+
 Route::get('test', [LoginController::class, 'view'])->name('test.view');
 Route::post('testposts/{post}/post', [LoginController::class, 'postTest'])->name('post.test');
 
 // Route::get('/', function () {
-//     return view('dashboard.index');
+//     return redirect('page-user');
 // });
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/laporan/{date?}', [LaporanController::class, 'index'])->name('laporan.index');
     Route::get('/laporan/filter/{tipe}/{value}', [LaporanController::class, 'filter'])->name('laporan.filter');
 

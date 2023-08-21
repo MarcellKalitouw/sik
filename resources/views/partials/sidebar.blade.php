@@ -1,6 +1,8 @@
  <div class="quixnav">
             <div class="quixnav-scroll">
                 <ul class="metismenu" id="menu">
+                    @if (Auth::user())
+                        
                     <li class="nav-label first">Main Menu</li>
                      <li class="{{ request()->segment(1) == '/' ? 'mm-active' : '' }}">
                         <a class="has-arrow" href="javascript:void()" aria-expanded="true">
@@ -61,6 +63,16 @@
                             <span class="nav-text">Keluar</span>
                         </a>
                     </li>
+                    @endif
+                    @if (!Auth::user())
+                        <li>
+                            <a href="{{ route('login') }}" aria-expanded="false">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                <span class="nav-text">Masuk</span>
+                            </a>
+                        </li>
+                    @endif
+                    
 
 
                 </ul>
