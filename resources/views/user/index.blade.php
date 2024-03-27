@@ -1,6 +1,6 @@
 @extends('partials.layout')
 
-@section('title', 'Pengeluaran')
+@section('title', 'User')
 
 @section('content')
     <div class="content-body">
@@ -14,8 +14,8 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Tabel Data Pengeluaran</h4>
-                                <a href="{{ route('data-pengeluaran.create') }}" class="btn btn-rounded btn-success">
+                                <h4 class="card-title">Tabel Data User </h4>
+                                <a href="{{ route('user.create') }}" class="btn btn-rounded btn-success">
                                   <i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Data
                                 </a>
                             </div>
@@ -25,41 +25,26 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Nama Pengeluaran</th>
-                                                <th>Kategori</th>
-                                                <th>Jumlah</th>
-                                                <th>Keterangan</th>
-                                                <th>Penanggung Jawab</th>
-                                                @if (Auth::user()->tipe == 'superadmin')
-                                                    
-                                                <th>Status</th>
-                                                @endif
+                                                <th>Nama User  </th>
+                                                <th>Tipe User  </th>
                                                 <th>Opsi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($pengeluaran as $item)
+                                            @forelse ($user as $item)
                                                 <tr style="color: black">
-                                                    <td>{{ $loop->iteration}}</td>
                                                     
-                                                    <td>{{ $item->nama }}</td>
-                                                    <td style="text-transform: uppercase">
-                                                        <span class="badge badge-primary">
-                                                            {{ $item->kategori }}
-                                                        </span>
-                                                    </td>
-                                                    <td>Rp.{{ number_format($item->jumlah, 0, ',', '.') }}</td>
-                                                    <td>{{ $item->keterangan ? $item->keterangan : '-' }}</td>
-                                                    <td>{{ $item->from_to }}</td>
-                                                    <td>{{ $item->status }} </td>
+                                                    <td>{{ $loop->iteration}}</td>
+                                                    <td>{{ $item->name}}</td>
+                                                    <td>{{ $item->tipe}}</td>
                                                     <td>
-                                                      <form action="{{ route('data-pengeluaran.destroy', $item->id) }}" method="POST">
+                                                      <form action="{{ route('user.destroy', $item->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <a href="{{ route('data-pengeluaran.edit', $item->id) }}" class="btn btn-rounded btn-warning">
+                                                        <a href="{{ route('user.edit', $item->id) }}" class="btn btn-rounded btn-warning">
                                                           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>  
                                                         </a>
-                                                        <a href="{{ asset('pengeluaran/'.$item->gambar) }}" target="_blank" class="btn btn-rounded btn-info">
+                                                        <a href="{{ asset('user/'.$item->gambar) }}" target="_blank" class="btn btn-rounded btn-info">
                                                           <i class="fa fa-info-circle" aria-hidden="true"></i>
                                                         </a>
                                                         <button type="submit" class="btn btn-rounded btn-danger">
@@ -76,12 +61,9 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th>No</th>
-                                                <th>Nama Pengeluaran</th>
-                                                <th>Kategori</th>
-                                                <th>Jumlah</th>
-                                                <th>Keterangan</th>
-                                                <th>Penanggung Jawab</th>
+                                                <th>No</th> 
+                                                <th>Nama User</th>
+                                                <th>Tipe User</th>
                                                 <th>Opsi</th>
                                             </tr>
                                         </tfoot>

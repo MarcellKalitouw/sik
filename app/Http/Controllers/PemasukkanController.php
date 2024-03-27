@@ -72,6 +72,7 @@ class PemasukkanController extends Controller
 
             $files['gambar'] = $fileName;
             $files['nama'] = $data['nama'];
+            $data['status'] = 'diterima';
             // dd($files);
 
             $gambar = Gambar::create($files);

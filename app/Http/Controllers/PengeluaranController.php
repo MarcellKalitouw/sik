@@ -119,7 +119,8 @@ class PengeluaranController extends Controller
             'nama' => 'required',
             'jumlah' => 'required',
             'from_to' => 'required',
-            'tipe' => 'required'
+            'tipe' => 'required',
+            'status' => 'required'
         ]);
         $oldData = $this->findId($id);
         $oldGbr = Gambar::where('id', $oldData->id_gambar)->first();

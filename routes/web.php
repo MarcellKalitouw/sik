@@ -8,7 +8,8 @@ use App\Http\Controllers\{
     DashboardController,
     LaporanController,
     LoginController,
-    KategoriController
+    KategoriController,
+    UserController
 };
 
 
@@ -37,7 +38,8 @@ Route::post('testposts/{post}/post', [LoginController::class, 'postTest'])->name
 //     return redirect('page-user');
 // });
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/dashboard/{bln?}/{thn?}', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/laporan/{date?}', [LaporanController::class, 'index'])->name('laporan.index');
     Route::get('/laporan/filter/{tipe}/{value}', [LaporanController::class, 'filter'])->name('laporan.filter');
 
@@ -46,5 +48,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('kategori', KategoriController::class);
     Route::resource('data-pengeluaran', PengeluaranController::class);
     Route::resource('data-pemasukkan', PemasukkanController::class);
+    Route::resource('kategori', KategoriController::class);
+    Route::resource('user', UserController::class);
 });
 

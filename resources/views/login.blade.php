@@ -33,7 +33,7 @@ style="
                                       @csrf
                                         <div class="form-group">
                                             <label><strong>User Name</strong></label>
-                                            <input type="email" name="email" class="form-control" placeholder="hello@example.com">
+                                            <input type="text" name="name" class="form-control" placeholder="hello@example.com">
                                         </div>
                                         <div class="form-group">
                                             <label><strong>Kata Sandi</strong></label>

@@ -45,10 +45,10 @@ class LoginController extends Controller
      public function postLogin(Request $request){
         // dd($request);
          $request->validate([
-            'email' => 'required',
+            'name' => 'required',
             'password' => 'required',
         ]);
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('name', 'password');
         if(Auth::attempt($credentials)){
                 // dd($credentials);
             return redirect()->intended('/dashboard')->withSuccess('Signed In');

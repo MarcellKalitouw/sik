@@ -20,6 +20,7 @@ class PencatatanKeuangan extends Model
         'jumlah',
         'from_to',
         'keterangan',
-        'tipe'
+        'tipe',
+        'status'
     ];
 }

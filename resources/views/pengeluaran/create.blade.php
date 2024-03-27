@@ -76,6 +76,30 @@
                                                 <div class="alert alert-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
+                                        {{-- {{ dd(Auth::user()->tipe) }} --}}
+                                        @if (Auth::user()->tipe === 'superadmin')
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-form-label-lg">Tipe Status</label>
+                                                <div class="col-sm-10">
+                                                    <select name="status"  class="form-control form-control-lg">
+                                                        <option selected disabled>~Pilih Tipe~</option>
+                                                        <option value="pending" @if (old('status') == 'pending')
+                                                            selected
+                                                        @endif>Pending</option>
+                                                        <option value="diterima" @if (old('status') == 'diterima')
+                                                            selected
+                                                        @endif>Diterima</option>
+                                                        <option value="ditolak" @if (old('status') == 'ditolak')
+                                                            selected
+                                                        @endif>Ditolak</option>
+                                                        
+                                                    </select>
+                                                </div>
+                                                @error('status')
+                                                    <div class="alert alert-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        @endif
                                         <div class="form-group">
                                             <label for="exampleFormControlTextarea1">Keterangan</label>
                                             <textarea class="form-control form-control-lg" id="exampleFormControlTextarea1" name="keterangan" rows="3">{{ old('keterangan') }}</textarea>
