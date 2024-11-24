@@ -12,21 +12,17 @@ use App\Exports\LaporanExport;
 class LaporanController extends Controller
 {
     //
-    public function index($date=null){
+    public function index($tipe=null, $value=null){
         $monthList = $this->showListMonth();
-
+        $data = $this->filter($tipe, $value);
         // dd($monthList);
         return view('laporan.index', [
-            'pencatatan_keuangan' => PencatatanKeuangan::leftJoin('gambars','pencatatan_keuangans.id_gambar','gambars.id')
-                             ->select(  'pencatatan_keuangans.*', 
-                                        'gambars.gambar as gambar', 
-                                    )
-                             ->get(),
+            'data' => $data,
             'monthList' => $monthList
         ]);
     }
     // public function filter(Request $request){
-    public function filter($tipe=null, $value=nul){
+    public function filter($tipe=null, $value=null){
         // dd($tipe, $value);
         // $input  = (object) [
         //         'tipe' => $tipe,
@@ -37,7 +33,7 @@ class LaporanController extends Controller
         $input->value = $value;
         // dd($input);
 
-        $dataFilter;
+        $dataFilter = [];
         if ($input->tipe == 'triwulan') {
             $dataFilter = $this->filterTriwulan($input);
         }
@@ -56,11 +52,16 @@ class LaporanController extends Controller
         
         // dd($dataFilter);
         // Log::info($input);
-        
-
+        return $dataFilter;
+        // return redirect()->route('laporan.index', ['data' => $dataFilter]);
         // return response()->json(['success'=>'Got Simple Ajax Request.']);
-        return Excel::download(new LaporanExport("export.export-transaksi", $dataFilter), 'new_transaksi.xlsx');
+        // return Excel::download(new LaporanExport("export.export-transaksi", $dataFilter), 'new_transaksi.xlsx');
 
+    }
+    public function filterDownload($tipe=null, $value=null){
+        $dataFilter = $this->filter($tipe, $value);
+
+        return Excel::download(new LaporanExport("export.export-transaksi", $dataFilter), 'new_transaksi.xlsx');
     }
 
     // public function exportLaporan ($datFilter) {

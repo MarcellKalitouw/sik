@@ -40,8 +40,8 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/dashboard/{bln?}/{thn?}', [DashboardController::class, 'index'])->name('dashboard.index');
-    Route::get('/laporan/{date?}', [LaporanController::class, 'index'])->name('laporan.index');
-    Route::get('/laporan/filter/{tipe}/{value}', [LaporanController::class, 'filter'])->name('laporan.filter');
+    Route::get('/laporan/{tipe?}/{value?}', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('/laporan/filter/{tipe}/{value}', [LaporanController::class, 'filterDownload'])->name('laporan.filter');
 
 
     Route::resource('pencatatan-keuangan', PencatatanKeuanganController::class);

@@ -126,6 +126,10 @@
                                         <div class="form-group row">
                                             <div class="col-sm-10">
                                                 <button type="submit" class="btn btn-primary btn-submit">Filter</button>
+                                                @if($data !== [])
+                                                    <button type="submit" class="btn btn-success btn-download" onclick="downloadLaporan()">Download Laporan</button>
+                                                    
+                                                @endif
                                             </div>
                                         </div>
 
@@ -137,24 +141,26 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="card-body">
+                            <div class="card-body">
                                 <div class="table-responsive">
                                     <table id="example" class="display" style="min-width: 845px">
                                         <thead>
                                             <tr>
                                                 <th>Nama Pengeluaran</th>
+                                                <th>Tanggal</th>
                                                 <th>Jumlah</th>
                                                 <th>Keterangan</th>
-                                                <th>Penanggung Jawab</th>
+                                                <th>Penanggung Jawab / Sumber</th>
                                                 <th>Tipe</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($pencatatan_keuangan as $item)
+                                            @forelse ($data as $item)
                                                 <tr style="color: black">
                                                     
                                                     <td>{{ $item->nama }}</td>
-                                                    <td>{{ $item->jumlah }}</td>
+                                                    <td>{{ date_format( new DateTime($item->tgl), 'd M Y ')  }}</td>
+                                                    <td>Rp.{{ number_format($item->jumlah, 0) }}</td>
                                                     <td>{{ $item->keterangan ? $item->keterangan : '-' }}</td>
                                                     <td>{{ $item->from_to }}</td>
                                                     <td style="text-transform:uppercase">{{ $item->tipe }}</td>
@@ -176,7 +182,7 @@
                                         </tfoot>
                                     </table>
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                    
@@ -251,8 +257,60 @@
     $(".btn-submit").click(function(e){
   
         e.preventDefault();
-        var valJangkaWaktu = document.getElementById('jangkaWaktu').value;
 
+        let {tipe, value} = getTipeValue();
+        
+        
+        
+        // var url = `/laporan/filter/${tipe}/${value}`;
+        var url = `/laporan/${tipe}/${value}`;
+        $.ajax({
+           type:'GET',
+           url:url,
+        //    data:{tipe: tipe, value:value},
+           success: function (data, status, xhr) {// success callback function
+                        // console.log('DATA', data);
+                        
+                        // $('p').append(data);
+                        var a = document.createElement("a");
+                        // a.download = "filename.xls";
+                        a.href = url;
+                        document.body.appendChild(a);
+                        a.click();
+                        location.href = `/laporan/${tipe}/${value}`;
+                        // location.href = `/laporan/filter/${tipe}/${value}`;
+
+                }
+        });
+
+        
+        
+        // function triggerExport(data){
+        //         var url = `/laporan/filter/${tipe}/${value}`;
+
+        //         // $.get(url);
+        //         $.ajax(url,   // request url
+        //             {
+        //                 url: url,
+        //                 method: "POST",
+        //                 success: function (data, status, xhr) {// success callback function
+        //                     // $('p').append(data);
+        //                     // window.location.href = url;
+        //                     var a = document.createElement("a");
+        //                     a.download = "filename.xls";
+        //                     a.href = url;
+        //                     document.body.appendChild(a);
+        //                     a.click();
+        //                     location.href = `/transaksi_laporan/${month}`;
+
+        //             }
+        //         });
+        // }
+  
+    });
+
+    function getTipeValue () {
+        var valJangkaWaktu = document.getElementById('jangkaWaktu').value;
         var triwulan = $("select[name=triwulan]").val();
         var perbulan = $("select[name=perbulan]").val();
         var pertahun = $("select[name=pertahun]").val();
@@ -285,47 +343,32 @@
             default:
                 break;
         }
+        return {tipe, value};
+    }
+
+    function getUrlDownload(){
+        const url = window.location.href;
+        const urlObj = new URL(url);
+
+        const pathnameParts = urlObj.pathname.split('/');
+
+        const tipe = pathnameParts[pathnameParts.length - 2];
+        const value = pathnameParts[pathnameParts.length - 1];
+
+        return {tipe, value};
+
+    }
+
+    function downloadLaporan () {
+        console.log('TESTING', getUrlDownload());
+        let {tipe, value} = getUrlDownload();
         var url = `/laporan/filter/${tipe}/${value}`;
-        $.ajax({
-           type:'GET',
-           url:url,
-        //    data:{tipe: tipe, value:value},
-           success: function (data, status, xhr) {// success callback function
-                        // console.log('DATA', data);
-                        
-                        // $('p').append(data);
-                        var a = document.createElement("a");
-                        // a.download = "filename.xls";
-                        a.href = url;
-                        document.body.appendChild(a);
-                        a.click();
-                        location.href = `/laporan/filter/${tipe}/${value}`;
-
-                }
-        });
-        
-        // function triggerExport(data){
-        //         var url = `/laporan/filter/${tipe}/${value}`;
-
-        //         // $.get(url);
-        //         $.ajax(url,   // request url
-        //             {
-        //                 url: url,
-        //                 method: "POST",
-        //                 success: function (data, status, xhr) {// success callback function
-        //                     // $('p').append(data);
-        //                     // window.location.href = url;
-        //                     var a = document.createElement("a");
-        //                     a.download = "filename.xls";
-        //                     a.href = url;
-        //                     document.body.appendChild(a);
-        //                     a.click();
-        //                     location.href = `/transaksi_laporan/${month}`;
-
-        //             }
-        //         });
-        // }
-  
-    });
+        var a = document.createElement("a");
+        // a.download = "filename.xls";
+        a.href = url;
+        document.body.appendChild(a);
+        a.click();
+        location.href = `/laporan/filter/${tipe}/${value}`;
+    }
 </script>
 @endpush
