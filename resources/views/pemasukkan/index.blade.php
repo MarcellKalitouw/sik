@@ -26,6 +26,7 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Nama Pendapatan</th>
+                                                <th>Tanggal</th>
                                                 <th>Kategori</th>
                                                 <th>Jumlah</th>
                                                 <th>Keterangan</th>
@@ -37,8 +38,8 @@
                                             @forelse ($pemasukkan as $item)
                                                 <tr style="color: black">
                                                     <td>{{ $loop->iteration}}</td>
-                                                    
                                                     <td>{{ $item->nama }}</td>
+                                                    <td>{{ date_format( new DateTime($item->tgl), 'd M Y ')  }}</td>
                                                     <td style="text-transform: uppercase">
                                                         <span class="badge badge-primary">
                                                             {{ $item->kategori }}

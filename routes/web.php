@@ -29,14 +29,14 @@ Route::get('login', [LoginController::class, 'viewLogin'])->name('login');
 Route::post('login-post', [LoginController::class, 'postLogin'])->name('post.login');
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
-route::get('/', [DashboardController::class,'pageUser'])->name('page.user');
+route::get('/page_user/{bln?}/{thn?}', [DashboardController::class,'pageUser'])->name('page.user');
 
 Route::get('test', [LoginController::class, 'view'])->name('test.view');
 Route::post('testposts/{post}/post', [LoginController::class, 'postTest'])->name('post.test');
 
-// Route::get('/', function () {
-//     return redirect('page-user');
-// });
+Route::get('/', function () {
+    return redirect()->route('page.user');;
+});
 Route::middleware(['auth'])->group(function () {
     // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/dashboard/{bln?}/{thn?}', [DashboardController::class, 'index'])->name('dashboard.index');

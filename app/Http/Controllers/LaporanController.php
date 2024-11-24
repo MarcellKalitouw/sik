@@ -63,10 +63,10 @@ class LaporanController extends Controller
 
     }
 
-    public function exportLaporan ($datFilter) {
+    // public function exportLaporan ($datFilter) {
 
-        return Excel::download(new LaporanExport("export.export-transaksi", $dataFilter), 'new_transaksi.xlsx');
-    }
+    //     return Excel::download(new LaporanExport("export.export-transaksi", $dataFilter), 'new_transaksi.xlsx');
+    // }
 
     public function filterRentangWaktu($input){
         // dd($input['value']['end']);
@@ -85,10 +85,10 @@ class LaporanController extends Controller
         $startDate  = Carbon::create($input->value.'-01-01')->format('Y-m-d');
         $endDate = Carbon::create($startDate)->endOfYear()->format('Y-m-d');
 
-        dd($startDate, $endDate);
+        // dd($startDate, $endDate);
         
-        $records = PencatatanKeuangan::whereDate('created_at', '>=', $startDate)
-                        ->whereDate('created_at', '<=', $endDate)
+        $records = PencatatanKeuangan::whereDate('tgl', '>=', $startDate)
+                        ->whereDate('tgl', '<=', $endDate)
                         ->get();
         return $records;
     }

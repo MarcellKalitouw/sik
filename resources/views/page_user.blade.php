@@ -50,6 +50,41 @@
                     </div>
                     
                 </div>
+                <div class="card-body">
+                    <div id="accordion-seven" class="accordion accordion-header-bg accordion-bordered">
+                        <div class="accordion__item">
+                            <div class="accordion__header accordion__header--primary collapsed" data-toggle="collapse" data-target="#header-bg_collapseOne" aria-expanded="false">
+                                <span class="accordion__header--icon"></span>
+                                <span class="accordion__header--text">Filter Data Pie Chard & Bar Chart</span>
+                                <span class="accordion__header--indicator"></span>
+                            </div>
+                            <div id="header-bg_collapseOne" class="accordion__body collapse" data-parent="#accordion-seven" style="">
+                                <div class="accordion__body--text">
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label-lg">Filter Per Bulan (Pie Chart)</label>
+                                        <div class="col-sm-10">
+                                            <input type="month"  id="bulan" name="bulan" class="form-control form-control-lg">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label-lg">Filter Per Tahun (Bar Chart)</label>
+                                        <div class="col-sm-10">
+                                            <select name="tahun"  id="tahun"  class="form-control form-control-lg">
+                                                <option selected disabled>~Pilih Tahun~</option>
+                                               
+                                                @for ($i = 0; $i < 4; $i++)
+                                                    <option value={{2025 - $i}} >{{2025 - $i}}</option>
+                                                @endfor
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <a href="" id="linkFilter" class="btn btn-success" onclick="getDataFilter()">Filter</a>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
                 <div class="row">
                     {{-- <div class="col-lg-8">
                         <div class="card">
@@ -253,7 +288,29 @@
 @push('scriptPlus')
     
     <script>
-    
+    async function filterBulan(val){
+        let dataBulan = val;
+        return dataBulan;
+        
+    }
+    async function filterTahun(val){
+        let dataTahun = val;
+        return dataTahun;
+    }
+
+    function getDataFilter(){
+        const year = $("#tahun").val();
+        const month = $("#bulan").val();
+        var link = document.getElementById("linkFilter"); 
+        link.getAttribute("href");
+        link.href = `/page_user/${month ? month : 'null'}/${year? year : 'null'}`;
+        // @if(Auth::user())
+        //     link.href = `/dashboard/${month ? month : 'null'}/${year? year : 'null'}`;    
+        // @else
+        // @endif
+
+
+    }
     // "use strict"
 
     //basic bar chart

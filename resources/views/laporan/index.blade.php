@@ -295,7 +295,7 @@
                         
                         // $('p').append(data);
                         var a = document.createElement("a");
-                        a.download = "filename.xls";
+                        // a.download = "filename.xls";
                         a.href = url;
                         document.body.appendChild(a);
                         a.click();
@@ -304,27 +304,27 @@
                 }
         });
         
-        function triggerExport(data){
-                var url = `/laporan/filter/${tipe}/${value}`;
+        // function triggerExport(data){
+        //         var url = `/laporan/filter/${tipe}/${value}`;
 
-                // $.get(url);
-                $.ajax(url,   // request url
-                    {
-                        url: url,
-                        method: "POST",
-                        success: function (data, status, xhr) {// success callback function
-                            // $('p').append(data);
-                            // window.location.href = url;
-                            var a = document.createElement("a");
-                            a.download = "filename.xls";
-                            a.href = url;
-                            document.body.appendChild(a);
-                            a.click();
-                            location.href = `/transaksi_laporan/${month}`;
+        //         // $.get(url);
+        //         $.ajax(url,   // request url
+        //             {
+        //                 url: url,
+        //                 method: "POST",
+        //                 success: function (data, status, xhr) {// success callback function
+        //                     // $('p').append(data);
+        //                     // window.location.href = url;
+        //                     var a = document.createElement("a");
+        //                     a.download = "filename.xls";
+        //                     a.href = url;
+        //                     document.body.appendChild(a);
+        //                     a.click();
+        //                     location.href = `/transaksi_laporan/${month}`;
 
-                    }
-                });
-        }
+        //             }
+        //         });
+        // }
   
     });
 </script>

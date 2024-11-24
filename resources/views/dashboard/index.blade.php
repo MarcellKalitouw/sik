@@ -63,13 +63,13 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label-lg">Filter Per Bulan (Pie Chart)</label>
                                         <div class="col-sm-10">
-                                            <input type="month" onchange="filterBulan(this.value)" id="bulan" name="bulan" class="form-control form-control-lg">
+                                            <input type="month"  id="bulan" name="bulan" class="form-control form-control-lg">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label-lg">Filter Per Tahun (Bar Chart)</label>
                                         <div class="col-sm-10">
-                                            <select name="tahun"  id="tahun" onchange="filterTahun(this.value)" class="form-control form-control-lg">
+                                            <select name="tahun"  id="tahun"  class="form-control form-control-lg">
                                                 <option selected disabled>~Pilih Tahun~</option>
                                                
                                                 @for ($i = 0; $i < 4; $i++)
@@ -78,7 +78,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <a href="" id="linkFilter" class="btn btn-success">Filter</a>
+                                    <a href="" id="linkFilter" class="btn btn-success" onclick="getDataFilter()">Filter</a>
                                 </div>
                             </div>
                         </div>
@@ -293,17 +293,24 @@
 
     //basic bar chart
 
-    function filterBulan(val){
+    async function filterBulan(val){
         let dataBulan = val;
-        var link = document.getElementById("linkFilter"); 
-            link.getAttribute("href"); 
-            link.href = `/dashboard/${dataBulan}`;
+        return dataBulan;
+        
     }
-     function filterTahun(val){
+    async function filterTahun(val){
         let dataTahun = val;
-        link = document.getElementById("linkFilter"); 
-            link.getAttribute("href"); 
-            link.href = `/dashboard/null/${dataTahun}`;
+        return dataTahun;
+    }
+
+    function getDataFilter(){
+        const year = $("#tahun").val();
+        const month = $("#bulan").val();
+        var link = document.getElementById("linkFilter"); 
+        link.getAttribute("href"); 
+        link.href = `/dashboard/${month ? month : 'null'}/${year? year : 'null'}`;
+
+
     }
 
 

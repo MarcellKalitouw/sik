@@ -2,6 +2,7 @@
                        <thead>
                            <tr>
                                 <th>Nama Pengeluaran</th>
+                                <th>Tanggal</th>
                                 <th>Jumlah</th>
                                 <th>Keterangan</th>
                                 <th>Penanggung Jawab / Sumber</th>
@@ -20,6 +21,7 @@
                               <tr style="color: black">
                                   
                                   <td>{{ $item->nama }}</td>
+                                  <td>{{ date_format( new DateTime($item->tgl), 'd M Y ')  }}</td>
                                   <td>Rp.{{ number_format($item->jumlah, 0) }}</td>
                                   <td>{{ $item->keterangan ? $item->keterangan : '-' }}</td>
                                   <td>{{ $item->from_to }}</td>

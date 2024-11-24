@@ -83,11 +83,14 @@ class DashboardController extends Controller
         );
     }
 
-    public function pageUser(){
+    public function pageUser($bln=null,$thn=null){
         if(Auth::user()){
             return redirect('/dashboard');
         }
+        $filterTahun = $thn ? $thn.'%' : Carbon::now()->year."%";
+        
         $pengeluaranBulanSkrg = PencatatanKeuangan::where('tipe', 'pengeluaran')
+                                ->where('status','diterima')
                                 ->whereYear('tgl', Carbon::now()->year)
                                 ->whereMonth('tgl', Carbon::now()->month)
                                 ->sum('jumlah');
@@ -97,31 +100,34 @@ class DashboardController extends Controller
                                 ->sum('jumlah');
         $kategoriPemasukkan = PencatatanKeuangan::leftJoin('kategoris','pencatatan_keuangans.id_kategori','kategoris.id')
                                 ->where('tipe', 'pemasukkan')
+                                ->where('pencatatan_keuangans.tgl','LIKE',$bln."%")
                                 ->select('pencatatan_keuangans.id_kategori', DB::raw('COUNT(*) as count'), 'kategoris.nama')
                                 ->groupBy('pencatatan_keuangans.id_kategori', 'kategoris.nama')
                                 // ->select('kategoris.nama')
                                 ->get();
         $kategoriPengeluaran = PencatatanKeuangan::leftJoin('kategoris','pencatatan_keuangans.id_kategori','kategoris.id')
                                 ->where('tipe', 'pengeluaran')
+                                ->where('status', 'diterima')
+                                ->where('pencatatan_keuangans.tgl','LIKE',$bln."%")
                                 ->select('pencatatan_keuangans.id_kategori', DB::raw('COUNT(*) as count'), 'kategoris.nama')
                                 ->groupBy('pencatatan_keuangans.id_kategori', 'kategoris.nama')
                                 // ->select('kategoris.nama')
                                 ->get();
         $arrayPiePemasukkan = $this->rebuildArray($kategoriPemasukkan);
         $arrayPiePengeluaran = $this->rebuildArray($kategoriPengeluaran);
-        // dd($kategoriPemasukkan, $kategoriPengeluaran);
-
+        // dd($kategoriPemasukkan,$bln, $kategoriPengeluaran, $arrayPiePemasukkan, $arrayPiePengeluaran);
+        // dd($filterTahun);
         $groupByMonth = "YEAR(tgl),MONTH(tgl)";
         $pengeluaranPerBulan = DB::table('pencatatan_keuangans')
                       ->where('tipe', 'pengeluaran')
-                      ->where('tgl','LIKE',Carbon::now()->year."%")
+                      ->where('tgl','LIKE',$filterTahun)
                       ->whereNull('deleted_at')
                       ->selectRaw("YEAR(tgl) as Year, MONTH(tgl) as month, count(id) as value, sum(jumlah) as jumlah")
                       ->groupByRaw($groupByMonth)
                       ->get();      
         $pemasukkanPerBulan = DB::table('pencatatan_keuangans')
                       ->where('tipe', 'pemasukkan')
-                      ->where('tgl','LIKE',Carbon::now()->year."%")
+                      ->where('tgl','LIKE',$filterTahun)
                       ->whereNull('deleted_at')
                       ->selectRaw("YEAR(tgl) as Year, MONTH(tgl) as month, count(id) as value, sum(jumlah) as jumlah")
                       ->groupByRaw($groupByMonth)
@@ -134,7 +140,7 @@ class DashboardController extends Controller
         $sepuluhPenguluaran = PencatatanKeuangan::orderByDesc('jumlah')->where('tipe','pengeluaran')->take(10)->get();
         $sepuluhPemasukkan = PencatatanKeuangan::orderByDesc('jumlah')->where('tipe','pemasukkan')->take(10)->get();
         
-        // dd($pengeluaranPerBulan, $pemasukkanPerBulan, $arrayChartPemasukkan);
+        // dd($filterTahun,$pengeluaranPerBulan, $pemasukkanPerBulan, $arrayChartPemasukkan, $arrayChartPengeluaran);
         
         return view('page_user', [
                 'totalPengeluaran' => $pengeluaranBulanSkrg,
